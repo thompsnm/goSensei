@@ -1,9 +1,6 @@
 var exec    = require('child_process').exec;
 var fs      = require('fs');
-var program = require('commander');
 var sgf2go  = require('sgf2go');
-
-program.version('1.0.0');
 
 var json = [
     [
