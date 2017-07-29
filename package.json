@@ -4,8 +4,13 @@
   "description": "Alexa skill for playing Go",
   "main": "index.js",
   "scripts": {
+    "build:osx": "cp index.js dist/osx && cp package.json dist/osx && cp libs/gnugo-3.8-osx-10.12/gnugo dist/osx",
+    "clean:osx": "rm -r dist/osx && mkdir dist/osx",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nathan Thompson",
-  "license": "GPL"
+  "license": "GPL",
+  "dependencies": {
+    "commander": "^2.11.0"
+  }
 }
