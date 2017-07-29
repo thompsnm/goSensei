@@ -1,3 +1,0 @@
-oracle.o: oracle.c ../config.h
-
-../config.h:
