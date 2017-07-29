@@ -3,7 +3,7 @@ var goSensei = require('./gosensei');
 
 exports.handler = function(event, context, callback){
   var alexa = Alexa.handler(event, context, callback);
-  alexa.registerHandlers(newSessionHandlers, guessModeHandlers, startGameHandlers);
+  alexa.registerHandlers(newSessionHandlers, gameModeHandlers, startGameHandlers);
   alexa.execute();
 };
 
@@ -25,7 +25,7 @@ var newSessionHandlers = {
   }
 };
 
-var guessModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
+var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
 
   'NewSession': function () {
     this.handler.state = '';
@@ -36,6 +36,9 @@ var guessModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
     var move = this.event.request.intent.slots.move.value;
 
     console.log('user move: ' + move);
+    goSensei.playerMove(move);
+    goSensei.computerMove();
+    this.emit(':ask', 'Move has been recorded. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
   },
 
   'AMAZON.HelpIntent': function() {

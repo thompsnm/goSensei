@@ -2,49 +2,27 @@ var exec    = require('child_process').exec;
 var fs      = require('fs');
 var sgf2go  = require('sgf2go');
 
-var json = [
+// Generate initial sgf file
+function generateInitialSgf(move) {
+  var json = [
     [
       [
         {"key":"FF","value":["4"]},
         {"key":"GM","value":["1"]},
-        {"key":"SZ","value":["9"]}
-      ],
-      [
-        {"key":"B","value":["aa"]}
-      ],
-      [
-        {"key":"W","value":["bb"]}
-      ],
-      [
-        {"key":"B","value":["cc"]}
-      ],
-      [
-        {"key":"W","value":["dd"]}
-      ],
-      [
-        {"key":"B","value":["ad"]}
-      ],
-      [
-        {"key":"W","value":["bd"]}
+        {"key":"SZ","value":["3"]}
       ]
     ]
-];
+  ];
 
-generateInitialSgf();
-executeMove();
+  playerMove(json, move);
+  writeSgfFile(json);
 
-// Generate initial sgf file
-function generateInitialSgf() {
-  const generated = sgf2go.json2sgf(json);
-  //const generated = fs.readFileSync(`${__dirname}/game.sgf`).toString();
-  fs.writeFileSync(__dirname + '/game.sgf', generated);
   console.log('Current sgf:');
   logSgfFile();
 }
 
-//Execute move
-function executeMove() {
-  const gnugo = exec(`${__dirname}/gnugo -l ${__dirname}/game.sgf -o ${__dirname}/game.sgf`);
+function computerMove() {
+  const gnugo = exec(`${__dirname}/gnugo -l /tmp/game.sgf -o /tmp/game.sgf`);
 
   gnugo.stdout.on('data', (data) => {
     console.log(data);
@@ -60,11 +38,41 @@ function executeMove() {
   });
 };
 
+function playerMove(json, move) {
+  json[0].push(
+    [
+      {
+        "key":"B", "value":[ convertMoveToSgfCoordinate(move) ]
+      }
+    ]
+  );
+  var sgf = sgf2go.json2sgf(json);
+}
+
+function convertMoveToSgfCoordinate(move) {
+  var letters = ['a', 'b', 'c'];
+  var column = move.substr(0, 0);
+  var row = parseInt(move.substr(1));
+  return (column + letters[letters.length - row]).toLowerCase();
+}
+
+function readSgfFile() {
+  var sgf = fs.readFileSync('/tmp/game.sgf').toString();
+  return sgf2go.sgf2json(sgf);
+}
+
+function writeSgfFile(json) {
+  var sgf = sgf2go.json2sgf(json);
+  fs.writeFileSync('/tmp/game.sgf', sgf);
+}
+
 function logSgfFile() {
-  console.log(fs.readFileSync(`${__dirname}/game.sgf`).toString());
+  console.log(sgf2go.json2sgf(readSgfFile()));
 }
 
 module.exports = {
-  executeMove: executeMove,
-  logSgfFile: logSgfFile
+  computerMove: computerMove,
+  generateInitialSgf: generateInitialSgf,
+  logSgfFile: logSgfFile,
+  playerMove: playerMove
 }
