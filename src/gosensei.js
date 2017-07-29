@@ -34,7 +34,7 @@ function computerMove() {
 };
 
 function playerMove(move) {
-  console.log('executing player move');
+  console.log('executing player move at ' + move);
   var json = readSgfFile();
   json[0].push(
     [
@@ -47,6 +47,7 @@ function playerMove(move) {
 }
 
 function convertMoveToSgfCoordinate(move) {
+  console.log('converting move ' + move);
   var letters = ['a', 'b', 'c'];
   var column = move.substr(0, 0);
   var row = parseInt(move.substr(1));
