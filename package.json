@@ -1,0 +1,11 @@
+{
+  "name": "go-sensei",
+  "version": "0.0.1",
+  "description": "Alexa skill for playing Go",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nathan Thompson",
+  "license": "GPL"
+}
