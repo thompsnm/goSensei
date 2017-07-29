@@ -15,7 +15,6 @@ function generateInitialSgf(move) {
   ];
 
   playerMove(json, move);
-  writeSgfFile(json);
 
   console.log('Current sgf:');
   logSgfFile();
@@ -46,7 +45,7 @@ function playerMove(json, move) {
       }
     ]
   );
-  var sgf = sgf2go.json2sgf(json);
+  writeSgfFile(json);
 }
 
 function convertMoveToSgfCoordinate(move) {
@@ -74,5 +73,6 @@ module.exports = {
   computerMove: computerMove,
   generateInitialSgf: generateInitialSgf,
   logSgfFile: logSgfFile,
-  playerMove: playerMove
+  playerMove: playerMove,
+  readSgfFile: readSgfFile
 }

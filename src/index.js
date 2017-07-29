@@ -36,7 +36,8 @@ var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
     var move = this.event.request.intent.slots.move.value;
 
     console.log('user move: ' + move);
-    goSensei.playerMove(move);
+    var json = goSensei.readSgfFile();
+    goSensei.playerMove(json, move);
     goSensei.computerMove();
     this.emit(':ask', 'Move has been recorded. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
   },
