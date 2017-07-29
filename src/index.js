@@ -26,6 +26,7 @@ var newSessionHandlers = {
 };
 
 var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
+  var lastMove = null;
 
   'NewSession': function () {
     this.handler.state = '';
@@ -37,14 +38,17 @@ var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
 
     console.log('user move: ' + move);
     goSensei.playerMove(move);
-    goSensei.computerMove();
-    this.emit(':ask', 'Move has been recorded. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
+    lastMove = goSensei.computerMove();
+    this.emit(':ask', 'I place a stone at ' + lastMove + '. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
   },
 
   'AMAZON.HelpIntent': function() {
     console.log('user asked for help');
-    //this.emit(':ask', 'I am thinking of a number between zero and one hundred, try to guess and I will tell you' +
-    //' if it is higher or lower.', 'Try saying a number.');
+    if(lastMove) {
+      this.emit(':ask', 'My last stone was placed at ' + lastMove + '. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
+    } else {
+      this.emit(':ask', 'Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
+    }
   },
 
   'SessionEndedRequest': function () {

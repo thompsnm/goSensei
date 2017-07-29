@@ -2,6 +2,10 @@ var exec    = require('child_process').exec;
 var fs      = require('fs');
 var sgf2go  = require('sgf2go');
 
+//playerMove('a1');
+//computerMove().then(function(move) { console.log(move); } );
+//console.log(convertMoveToSgfCoordinate('a1'));
+
 function generateInitialSgf(move) {
   console.log('generating initial sgf file');
   return [
@@ -17,19 +21,26 @@ function generateInitialSgf(move) {
 
 function computerMove() {
   console.log('executing computer move');
-  const gnugo = exec(`${__dirname}/gnugo -l /tmp/game.sgf -o /tmp/game.sgf`);
 
-  gnugo.stdout.on('data', (data) => {
-    console.log(data);
-  });
+  return new Promise((resolve, reject) => {
+    var gnugo = exec(`${__dirname}/gnugo -l /tmp/game.sgf -o /tmp/game.sgf`);
 
-  gnugo.stderr.on('data', (data) => {
-    console.log(data);
-  });
+    gnugo.stdout.on('data', (data) => {
+      console.log(data);
+    });
 
-  gnugo.on('close', (code) => {
-    console.log('New sgf:');
-    logSgfFile();
+    gnugo.stderr.on('data', (data) => {
+      console.log(data);
+    });
+
+    gnugo.on('close', (code) => {
+      console.log('New sgf:');
+      logSgfFile();
+
+      var moveList = readSgfFile()[0];
+      var lastMove = moveList[moveList.length - 1][0].value;
+      resolve(lastMove);
+    });
   });
 };
 
@@ -49,9 +60,12 @@ function playerMove(move) {
 function convertMoveToSgfCoordinate(move) {
   console.log('converting move ' + move);
   var letters = ['a', 'b', 'c'];
-  var column = move.substr(0, 0);
+  var column = move.substr(0, 1);
   var row = parseInt(move.substr(1));
-  return (column + letters[letters.length - row]).toLowerCase();
+  var convertedMove = column.concat(letters[letters.length - row]).toLowerCase();
+
+  console.log('converted move: ' + convertedMove);
+  return convertedMove;
 }
 
 function readSgfFile() {
