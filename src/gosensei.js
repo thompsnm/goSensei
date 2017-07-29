@@ -21,6 +21,7 @@ function generateInitialSgf(move) {
 }
 
 function computerMove() {
+  console.log('executing computer move');
   const gnugo = exec(`${__dirname}/gnugo -l /tmp/game.sgf -o /tmp/game.sgf`);
 
   gnugo.stdout.on('data', (data) => {
@@ -38,6 +39,7 @@ function computerMove() {
 };
 
 function playerMove(json, move) {
+  console.log('executing player move');
   json[0].push(
     [
       {
@@ -56,11 +58,13 @@ function convertMoveToSgfCoordinate(move) {
 }
 
 function readSgfFile() {
+  console.log('reading sgf file');
   var sgf = fs.readFileSync('/tmp/game.sgf').toString();
   return sgf2go.sgf2json(sgf);
 }
 
 function writeSgfFile(json) {
+  console.log('writing sgf file');
   var sgf = sgf2go.json2sgf(json);
   fs.writeFileSync('/tmp/game.sgf', sgf);
 }
