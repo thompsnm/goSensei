@@ -5,10 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "prebuild:lambda": "npm run clean:lambda && npm install",
-    "build:lambda": "cp src/. dist/lambda/tmp && cp -r node_modules dist/lambda/tmp && cp libs/gnugo-3.8-amazon-linux/gnugo dist/lambda/tmp && zip -r dist/lambda/goSensei-lambda.zip dist/lambda/tmp/.",
+    "build:lambda": "cp -r src/. dist/lambda/tmp && cp -r node_modules dist/lambda/tmp && cp libs/gnugo-3.8-amazon-linux/gnugo dist/lambda/tmp && zip -r dist/lambda/goSensei-lambda.zip dist/lambda/tmp/.",
     "postbuild:lambda": "rm -rf dist/lambda/tmp",
     "prebuild:osx": "npm run clean:osx",
-    "build:osx": "cp src/. dist/osx && cp package.json dist/osx && cp libs/gnugo-3.8-osx-10.12/gnugo dist/osx",
+    "build:osx": "cp -r src/. dist/osx && cp package.json dist/osx && cp libs/gnugo-3.8-osx-10.12/gnugo dist/osx",
     "clean:lambda": "rm -rf dist/lambda && mkdir -p dist/lambda/tmp",
     "clean:osx": "rm -rf dist/osx && mkdir dist/osx",
     "test": "echo \"Error: no test specified\" && exit 1"
