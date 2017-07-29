@@ -63,3 +63,8 @@ function executeMove() {
 function logSgfFile() {
   console.log(fs.readFileSync(`${__dirname}/game.sgf`).toString());
 }
+
+module.exports = {
+  executeMove: executeMove,
+  logSgfFile: logSgfFile
+}
