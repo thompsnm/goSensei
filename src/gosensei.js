@@ -2,9 +2,9 @@ var exec    = require('child_process').exec;
 var fs      = require('fs');
 var sgf2go  = require('sgf2go');
 
-// Generate initial sgf file
 function generateInitialSgf(move) {
-  var json = [
+  console.log('generating initial sgf file');
+  return [
     [
       [
         {"key":"FF","value":["4"]},
@@ -13,11 +13,6 @@ function generateInitialSgf(move) {
       ]
     ]
   ];
-
-  playerMove(json, move);
-
-  console.log('Current sgf:');
-  logSgfFile();
 }
 
 function computerMove() {
@@ -38,8 +33,9 @@ function computerMove() {
   });
 };
 
-function playerMove(json, move) {
+function playerMove(move) {
   console.log('executing player move');
+  var json = readSgfFile();
   json[0].push(
     [
       {
@@ -59,8 +55,12 @@ function convertMoveToSgfCoordinate(move) {
 
 function readSgfFile() {
   console.log('reading sgf file');
-  var sgf = fs.readFileSync('/tmp/game.sgf').toString();
-  return sgf2go.sgf2json(sgf);
+  if(fs.existsSync('/tmp/game.sgf')) {
+    var sgf = fs.readFileSync('/tmp/game.sgf').toString();
+    return sgf2go.sgf2json(sgf);
+  } else {
+    return generateInitialSgf();
+  }
 }
 
 function writeSgfFile(json) {

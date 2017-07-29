@@ -72,8 +72,8 @@ var startGameHandlers = Alexa.CreateStateHandler(states.STARTMODE, {
   },
 
   'AMAZON.YesIntent': function() {
+    console.log('Yes intent triggered');
     this.handler.state = states.GAMEMODE;
-    goSensei.generateInitialSgf();
     this.emit(':ask', 'Great! Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
   },
 
