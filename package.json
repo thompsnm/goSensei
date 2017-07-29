@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "prebuild:lambda": "npm run clean:lambda && npm install",
-    "build:lambda": "cp -r src/. dist/lambda/tmp && cp -r node_modules dist/lambda/tmp && cp libs/gnugo-3.8-amazon-linux/gnugo dist/lambda/tmp && zip -r dist/lambda/goSensei-lambda.zip dist/lambda/tmp/.",
+    "build:lambda": "cp -r src/. dist/lambda/tmp && cp -r node_modules dist/lambda/tmp && cp -r package.json dist/lambda/tmp && cp libs/gnugo-3.8-amazon-linux/gnugo dist/lambda/tmp && cd dist/lambda/tmp/ && zip -r '../goSensei-lambda.zip' .",
     "postbuild:lambda": "rm -rf dist/lambda/tmp",
     "prebuild:osx": "npm run clean:osx",
     "build:osx": "cp -r src/. dist/osx && cp package.json dist/osx && cp libs/gnugo-3.8-osx-10.12/gnugo dist/osx",
