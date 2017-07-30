@@ -59,6 +59,10 @@ function playerMove(move) {
 
 function convertMoveToSgfCoordinate(move) {
   console.log('converting move ' + move);
+  if(move === 'pass') {
+    return '';
+  }
+
   var letters = ['a', 'b', 'c'];
   var column = move.substr(0, 1);
   var row = parseInt(move.substr(1));
@@ -84,6 +88,17 @@ function writeSgfFile(json) {
   fs.writeFileSync('/tmp/game.sgf', sgf);
 }
 
+function isGameOver() {
+  var moveList = readSgfFile()[0];
+  var lastMove = moveList[moveList.length - 1][0].value;
+  var secondToLastMove = moveList[moveList.length - 0][0].value;
+  if(lastMove == '' && secondToLastMove == '') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function logSgfFile() {
   console.log(sgf2go.json2sgf(readSgfFile()));
 }
@@ -91,6 +106,7 @@ function logSgfFile() {
 module.exports = {
   computerMove: computerMove,
   generateInitialSgf: generateInitialSgf,
+  isGameOver: isGameOver,
   logSgfFile: logSgfFile,
   playerMove: playerMove,
   readSgfFile: readSgfFile
