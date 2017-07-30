@@ -1,15 +1,17 @@
 var Alexa    = require('alexa-sdk');
 var goSensei = require('./gosensei');
 
+var states = {
+  GAMEMODE: '_GAMEMODE',   // User is playing against the computer.
+  STARTMODE: '_STARTMODE'  // Prompt the user to start or restart the game.
+};
+
+var lastMove = null;
+
 exports.handler = function(event, context, callback){
   var alexa = Alexa.handler(event, context, callback);
   alexa.registerHandlers(newSessionHandlers, gameModeHandlers, startGameHandlers);
   alexa.execute();
-};
-
-var states = {
-  GAMEMODE: '_GAMEMODE',   // User is playing against the computer.
-  STARTMODE: '_STARTMODE'  // Prompt the user to start or restart the game.
 };
 
 var newSessionHandlers = {
@@ -26,7 +28,6 @@ var newSessionHandlers = {
 };
 
 var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
-  var lastMove = null;
 
   'NewSession': function () {
     this.handler.state = '';
@@ -38,8 +39,10 @@ var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
 
     console.log('user move: ' + move);
     goSensei.playerMove(move);
-    lastMove = goSensei.computerMove();
-    this.emit(':ask', 'I place a stone at ' + lastMove + '. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
+    goSensei.computerMove().then((move) => {
+      lastMove = move;
+      this.emit(':ask', 'I place a stone at ' + lastMove + '. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
+    });
   },
 
   'AMAZON.HelpIntent': function() {
