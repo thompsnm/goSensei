@@ -30,27 +30,12 @@ function generateInitialSgf(move) {
 function computerMove() {
   console.log('executing computer move');
 
-  //return new Promise((resolve, reject) => {
-    var gnugo = execSync(`${__dirname}/gnugo -l /tmp/game.sgf -o /tmp/game.sgf`);
+  var gnugo = execSync(`${__dirname}/gnugo -l /tmp/game.sgf -o /tmp/game.sgf`);
+  logSgfFile();
 
-    //gnugo.stdout.on('data', (data) => {
-    //  console.log(data);
-    //});
-
-    //gnugo.stderr.on('data', (data) => {
-    //  console.log(data);
-    //});
-
-    //gnugo.on('close', (code) => {
-    //  console.log('New sgf:');
-      logSgfFile();
-
-      var moveList = readSgfFile()[0];
-      var lastMove = moveList[moveList.length - 1][0].value;
-      //resolve(lastMove);
+  var moveList = readSgfFile()[0];
+  var lastMove = moveList[moveList.length - 1][0].value;
   return lastMove;
-  //  });
-  //});
 };
 
 function playerMove(move) {
