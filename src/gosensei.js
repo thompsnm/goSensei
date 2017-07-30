@@ -3,6 +3,8 @@ var execSync = require('child_process').execSync;
 var fs       = require('fs');
 var sgf2go   = require('sgf2go');
 
+var sgfCoordinateLetters = ['i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
+
 //playerMove('b2');
 //console.log(isGameOver());
 //computerMove();
@@ -11,9 +13,6 @@ var sgf2go   = require('sgf2go');
 //console.log(isGameOver());
 //console.log(reportScore().toString());
 
-//computerMove().then(function(move) { console.log(move); } );
-//console.log(convertMoveToSgfCoordinate('a1'));
-
 function generateInitialSgf(move) {
   console.log('generating initial sgf file');
   return [
@@ -21,7 +20,7 @@ function generateInitialSgf(move) {
       [
         {"key":"FF","value":["4"]},
         {"key":"GM","value":["1"]},
-        {"key":"SZ","value":["3"]}
+        {"key":"SZ","value":["9"]}
       ]
     ]
   ];
@@ -35,7 +34,7 @@ function computerMove() {
 
   var moveList = readSgfFile()[0];
   var lastMove = moveList[moveList.length - 1][0].value;
-  return lastMove;
+  return convertSgfCoordinateToMove(lastMove.toString());;
 };
 
 function playerMove(move) {
@@ -57,10 +56,26 @@ function convertMoveToSgfCoordinate(move) {
     return '';
   }
 
-  var letters = ['a', 'b', 'c'];
   var column = move.substr(0, 1);
   var row = parseInt(move.substr(1));
-  var convertedMove = column.concat(letters[letters.length - row]).toLowerCase();
+  var convertedMove = column.concat(sgfCoordinateLetters[row - 1]).toLowerCase();
+
+  console.log('converted move: ' + convertedMove);
+  return convertedMove;
+}
+
+function convertSgfCoordinateToMove(coordinate) {
+  console.log('converting coordinate ' + coordinate);
+  console.log(typeof coordinate);
+  if(coordinate === '') {
+    return 'pass';
+  }
+
+  var column = coordinate.substr(0, 1);
+  var row = coordinate.substr(1);
+  console.log('row = ' + row);
+  console.log(sgfCoordinateLetters.indexOf(row) + 1);
+  var convertedMove = column.concat(sgfCoordinateLetters.indexOf(row) + 1);
 
   console.log('converted move: ' + convertedMove);
   return convertedMove;
