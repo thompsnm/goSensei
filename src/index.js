@@ -50,7 +50,7 @@ var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
     if(lastMove == 'pass' && goSensei.isGameOver()) {
       this.emit(':tell', goSensei.reportScore());
     } else if (lastMove == 'pass') {
-      this.emit(':ask', 'I pass. ' + playMoveMessage, playMoveMessage);
+      this.emit(':ask', 'I pass. ' + playMoveMessage, 'I pass. ' + playMoveMessage);
     } else {
       this.emit(':ask', 'I place a stone at ' + lastMove + '. ' + playMoveMessage, playMoveMessage);
     };
