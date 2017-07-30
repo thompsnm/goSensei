@@ -82,13 +82,13 @@ var startGameHandlers = Alexa.CreateStateHandler(states.STARTMODE, {
     console.log('user asked for help');
     this.emit(
       ':ask',
-      'This skill will allow me to play a game of Go against you.' +
-      'We will take turns saying coordinates where we would like to play stones.' +
-      'You will go first and play as black.' +
-      'I will go second and play as white.' +
-      'We will play on a 9 by 9 board.' +
-      'We will play by Japanese rules.' +
-      'Komi is set at 5 and a half.' +
+      'This skill will allow me to play a game of Go against you. ' +
+      'We will take turns saying coordinates where we would like to play stones. ' +
+      'You will go first and play as black. ' +
+      'I will go second and play as white. ' +
+      'We will play on a 9 by 9 board. ' +
+      'We will play by Japanese rules. ' +
+      'Komi is set at 5 and a half. ' +
       'Would you like to play a game of Go?',
       'Say yes to start the game or no to quit.'
     );
