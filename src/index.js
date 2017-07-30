@@ -7,6 +7,7 @@ var states = {
 };
 
 var lastMove = null;
+var playMoveMessage = 'Where would you like to play? Say a coordinate like F5, or say pass if you are finished.';
 
 exports.handler = function(event, context, callback){
   var alexa = Alexa.handler(event, context, callback);
@@ -49,16 +50,16 @@ var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
     if(lastMove == 'pass' && goSensei.isGameOver()) {
       this.emit(':tell', goSensei.reportScore());
     } else {
-      this.emit(':ask', 'I place a stone at ' + lastMove + '. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
+      this.emit(':ask', 'I place a stone at ' + lastMove + '. ' + playMoveMessage, playMoveMessage);
     };
   },
 
   'AMAZON.HelpIntent': function() {
     console.log('user asked for help');
     if(lastMove) {
-      this.emit(':ask', 'My last stone was placed at ' + lastMove + '. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
+      this.emit(':ask', 'My last stone was placed at ' + lastMove + '. ' + playMoveMessage, playMoveMessage);
     } else {
-      this.emit(':ask', 'Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
+      this.emit(':ask', playMoveMessage, playMoveMessage);
     }
   },
 
@@ -97,7 +98,7 @@ var startGameHandlers = Alexa.CreateStateHandler(states.STARTMODE, {
   'AMAZON.YesIntent': function() {
     console.log('Yes intent triggered');
     this.handler.state = states.GAMEMODE;
-    this.emit(':ask', 'Great! Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
+    this.emit(':ask', 'Great! ' + playMoveMessage, playMoveMessage);
   },
 
   'AMAZON.NoIntent': function() {
