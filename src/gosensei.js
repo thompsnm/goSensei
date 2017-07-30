@@ -117,7 +117,7 @@ function reportScore() {
   console.log('checking score');
 
   var gnugo = execSync(`${__dirname}/gnugo -l /tmp/game.sgf --score estimate`);
-  return gnugo.toString();
+  return gnugo.toString().trim();
 }
 
 function logSgfFile() {
