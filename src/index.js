@@ -43,12 +43,14 @@ var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
     console.log(goSensei.isGameOver());
     if(move == 'pass' && goSensei.isGameOver()) {
       this.emit(':tell', goSensei.reportScore());
+      goSensei.deleteSgfFile();
     };
 
     lastMove = goSensei.computerMove()
     console.log(goSensei.isGameOver());
     if(lastMove == 'pass' && goSensei.isGameOver()) {
       this.emit(':tell', goSensei.reportScore());
+      goSensei.deleteSgfFile();
     } else if (lastMove == 'pass') {
       this.emit(':ask', 'I pass. ' + playMoveMessage, 'I pass. ' + playMoveMessage);
     } else {

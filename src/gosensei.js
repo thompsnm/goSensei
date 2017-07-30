@@ -12,6 +12,7 @@ var sgfCoordinateLetters = ['i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
 //playerMove('pass');
 //console.log(isGameOver());
 //console.log(reportScore().toString());
+//deleteSgfFile();
 
 function generateInitialSgf(move) {
   console.log('generating initial sgf file');
@@ -124,8 +125,14 @@ function logSgfFile() {
   console.log(sgf2go.json2sgf(readSgfFile()));
 }
 
+function deleteSgfFile() {
+  console.log('deleting sgf file');
+  fs.unlinkSync('/tmp/game.sgf');
+}
+
 module.exports = {
   computerMove: computerMove,
+  deleteSgfFile: deleteSgfFile,
   generateInitialSgf: generateInitialSgf,
   isGameOver: isGameOver,
   logSgfFile: logSgfFile,
