@@ -2,7 +2,14 @@ var exec    = require('child_process').exec;
 var fs      = require('fs');
 var sgf2go  = require('sgf2go');
 
-//playerMove('a1');
+//playerMove('b2');
+//console.log(isGameOver());
+//computerMove().then(() => {
+//  console.log(isGameOver());
+//  playerMove('pass');
+//  console.log(isGameOver());
+//});
+
 //computerMove().then(function(move) { console.log(move); } );
 //console.log(convertMoveToSgfCoordinate('a1'));
 
@@ -89,9 +96,17 @@ function writeSgfFile(json) {
 }
 
 function isGameOver() {
+  console.log('checking if game is over');
   var moveList = readSgfFile()[0];
+  //console.log(moveList);
+  //console.log(moveList.length);
+  if(moveList.length < 3) {
+    return false;
+  }
+
   var lastMove = moveList[moveList.length - 1][0].value;
-  var secondToLastMove = moveList[moveList.length - 0][0].value;
+  //console.log(lastMove);
+  var secondToLastMove = moveList[moveList.length - 2][0].value;
   if(lastMove == '' && secondToLastMove == '') {
     return true;
   } else {
