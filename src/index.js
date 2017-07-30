@@ -40,11 +40,17 @@ var gameModeHandlers = Alexa.CreateStateHandler(states.GAMEMODE, {
     console.log('user move: ' + move);
     goSensei.playerMove(move);
     console.log(goSensei.isGameOver());
-    goSensei.computerMove().then((move) => {
-      lastMove = move;
+    if(move == 'pass' && goSensei.isGameOver()) {
+      this.emit(':tell', goSensei.reportScore());
+    };
+
+    lastMove = goSensei.computerMove()
+    console.log(goSensei.isGameOver());
+    if(lastMove == 'pass' && goSensei.isGameOver()) {
+      this.emit(':tell', goSensei.reportScore());
+    } else {
       this.emit(':ask', 'I place a stone at ' + lastMove + '. Where would you like to play? Say a coordinate like F5.', 'Where would you like to play? Say a coordinate like F5.');
-      console.log(goSensei.isGameOver());
-    });
+    };
   },
 
   'AMAZON.HelpIntent': function() {
