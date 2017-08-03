@@ -1,4 +1,4 @@
-# goSensei
+# Go Sensei
 
 This is the source code for the [Go Sensei](https://www.amazon.com/Nathan-Thompson-Go-Sensei/dp/B074DBPH2D/) Alexa Skill.
 
