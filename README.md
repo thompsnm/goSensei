@@ -4,7 +4,7 @@ This is the source code for the [Go Sensei](https://www.amazon.com/Nathan-Thomps
 
 ## Roadmap Voting
 
-Feel free to [leave a +1 reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) on the issues you would most like us to address. New feature development will be prioritized based on this voting system.
+Please [leave a +1 reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) on any of [the issues](https://github.com/thompsnm/goSensei/issues) you would most like us to address. New feature development will be prioritized based on this voting system.
 
 ## Building
 
