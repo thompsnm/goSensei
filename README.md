@@ -1,6 +1,6 @@
 # Go Sensei
 
-This is the source code for the [Go Sensei](https://www.amazon.com/Nathan-Thompson-Go-Sensei/dp/B074DBPH2D/) Alexa Skill.
+This is the source code for the [Go Sensei](https://www.amazon.com/Nathan-Thompson-Go-Sensei/dp/B074DBPH2D/) Alexa Skill. It is built using the [Gnu Go](https://www.gnu.org/software/gnugo/) library that has been compiled for the [Amazon Linux AMI](https://aws.amazon.com/amazon-linux-ami/). It can be [enabled for your Alexa device](https://www.amazon.com/gp/help/customer/display.html?nodeId=201848700) using the Alexa app on your smartphone.
 
 ## Roadmap Voting
 
